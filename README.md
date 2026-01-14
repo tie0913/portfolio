@@ -90,9 +90,27 @@ Only the most critical flows are documented here.
 
 ## Key Engineering Challenges
 
-### Async DB Transaction Handling
-- Designed an async session lifecycle using SQLAlchemy 2.0
-- Solved connection pool exhaustion issues
+### Context Handling in AI Interaction
+
+Nutri Pilot does not maintain long-lived AI sessions.
+
+Instead, only the user’s chronic conditions and allergy information are stored as
+structured fields in the database.
+
+When the user submits a food image, these fields are sent together with the image
+to the AI model. This avoids keeping long conversational context in memory and keeps
+the backend stateless.
+
+### Image Handling Strategy
+
+When a user uploads a food image, the system generates two derived versions:
+
+- A compressed image optimized for AI inference to reduce token usage  
+- A thumbnail image stored in MongoDB (planned to be migrated to a file server) for
+  displaying user history
+
+This approach reduces AI cost while keeping the UI responsive.
+
 
 
 ## My Contributions
