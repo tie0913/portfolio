@@ -40,7 +40,7 @@ advice generation. Rather than focusing on physical database design, the model c
 This unified domain model serves as the foundation for all critical workflows, including authentication, password recovery, and AI-powered nutrition guidance.
 
 
-## Core Workflow & Design Decisions
+## Core System Workflow
 
 Before implementation, I designed key system workflows to ensure security, scalability, and maintainability. Only the most critical flows are documented here.
 
