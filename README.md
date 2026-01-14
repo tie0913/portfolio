@@ -2,9 +2,9 @@
 
 Nutri Pilot is a full-stack SaaS platform that helps fitness studios and wellness coaches generate personalized meal plans and track client nutrition compliance.
 
-## Live Demo 
+## Demos
 
-- Demo: https://www.youtube.com/watch?v=PpI3tH1lzD8
+- Live Demo: https://www.youtube.com/watch?v=PpI3tH1lzD8 (YouTube walkthrough, 3min)
 - GitHub Repo: 
   - https://github.com/tie0913/nuitri_pilot_frontend
   - https://github.com/tie0913/nuitri_pilot_backend
@@ -23,35 +23,26 @@ Nutri Pilot is a full-stack SaaS platform that helps fitness studios and wellnes
 
 ![Architecture](./images/Architecture.jpg)
 
-## Unified Domain Model
+## Unified Domain Model（E-R View）
 
 ![Unified Domain Model](./images/Domain.jpg)
 
-This diagram represents the core business entities of Nutri Pilot and how they interact
-to support user management, nutrition tracking, and AI-powered advice generation.
-
-Rather than focusing on infrastructure-level concerns, the model captures the essential
-domain concepts required for the current MVP stage.
+This diagram represents the core business entities of Nutri Pilot and how they collaborate to support authentication, password recovery, and AI-powered nutrition
+advice generation. Rather than focusing on physical database design, the model captures the essential domain concepts that drive the current MVP.
 
 ### Design Highlights
 
-- **User** is the central aggregate root, connecting preferences, goals, health measures,
-  and all AI-generated content.
-- **Measure** and **MeasureValue** are separated to support historical data tracking
-  without duplicating measurement definitions.
-- **Request**, **Suggestion**, and **Recommendation** form a clear pipeline from
-  raw user input to actionable advice.
-- **Setting** is modeled as a lightweight extension to the user profile to isolate
-  feature configuration from core business logic.
+- **User** is the central aggregate root, representing account identity and linking to all security, wellness, and AI-generated data.
+- **Wellness** encapsulates the user’s health context and aggregates structured medical information such as **Chronic** conditions and **Allergies**, allowing the health profile to evolve without impacting core user data.
+- **Session** and **Otp** are modeled as independent security entities to clearly separate authentication state and one-time verification flows.
+- **Suggestions** represents persisted AI advice records, forming the final output of the AI interaction pipeline.
 
-This unified domain model serves as the foundation for all key workflows,
-including authentication, password recovery, and AI-powered recommendation generation.
+This unified domain model serves as the foundation for all critical workflows, including authentication, password recovery, and AI-powered nutrition guidance.
 
 
 ## Core Workflow & Design Decisions
 
-Before implementation, I designed key system workflows to ensure security, scalability, and maintainability.
-Only the most critical flows are documented here.
+Before implementation, I designed key system workflows to ensure security, scalability, and maintainability. Only the most critical flows are documented here.
 
 ### 1. Reset Password – Secure Identity Recovery
 
@@ -94,12 +85,7 @@ Only the most critical flows are documented here.
 
 Nutri Pilot does not maintain long-lived AI sessions.
 
-Instead, only the user’s chronic conditions and allergy information are stored as
-structured fields in the database.
-
-When the user submits a food image, these fields are sent together with the image
-to the AI model. This avoids keeping long conversational context in memory and keeps
-the backend stateless.
+Instead, only the user’s chronic conditions and allergy information are stored as structured fields in the database. When the user submits a food image, these fields are sent together with the image to the AI model. This avoids keeping long conversational context in memory and keeps the backend stateless.
 
 ### Image Handling Strategy
 
