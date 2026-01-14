@@ -21,7 +21,7 @@ Nutri Pilot is a full-stack SaaS platform that helps fitness studios and wellnes
 
 ## System Architecture
 
-![Architecture](./images/architecture.jpg)
+![Architecture](./images/Architecture.jpg)
 
 ## Unified Domain Model
 
