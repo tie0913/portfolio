@@ -7,6 +7,7 @@ I am looking to grow as a backend or data engineer in Canada, where I can contri
 
 # Skills & Background
 My work focuses primarily on backend development and data systems. I am comfortable designing and implementing APIs, working with relational and NoSQL databases, and building data processing workflows with an emphasis on clarity, performance, and long-term maintainability.
+
 I prefer understanding the reasoning behind architectural decisions rather than relying on patterns blindly, and I value simple designs that scale through good structure rather than unnecessary complexity.
 
 - **Languages:** Java, Scala, Python, JavaScript, Dart
@@ -14,6 +15,8 @@ I prefer understanding the reasoning behind architectural decisions rather than 
 - **Databases:** MySQL, MongoDB, Oracle, Redis
 - **Data & Platforms:** Apache Spark, Kafka, Hadoop
 - **OS:** Linux, Windows
+
+While I don’t start every project with complete familiarity across all technologies, I have a proven ability to learn new tools quickly and apply them effectively. For example, during the Nutri Pilot capstone project, I began learning Flutter and Python during implementation and delivered a working solution within approximately 70 hours of focused development.
 
 # Selected Projects
 
