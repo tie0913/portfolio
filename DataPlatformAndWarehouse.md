@@ -9,7 +9,7 @@ I was asked to independently investigate the root causes, propose a complete red
 At that time, the entire data warehouse was batch-driven and had become a serious operational liability. The system relied on nightly Sqoop jobs to extract incremental data from production MySQL databases using modified-time filtering, then stored the data in a Hadoop + Hive cluster. Downstream DWD, DWS, DIM, and ADS layers were built through chained Hive SQL jobs orchestrated by scattered crontab scripts. After ADS tables were generated, data was pushed back into MySQL via Sqoop for BI reporting.
 
 ![Old Architecture](./images/data_platform/OriginalArchitecture.jpg)
- 
+
 This architecture was fragile and opaque. The cluster experienced systemic failures every two to three days. Jobs frequently retried and failed, dashboards were delayed or unavailable, and both analytics and algorithm teams reported that their core work was being blocked by unreliable data delivery. Instead of enabling business decisions, the data platform had become a bottleneck.
 A detailed audit revealed following critical issues:
 - High latency: All metrics were produced on a T+1 basis, making real-time business monitoring impossible.
@@ -41,7 +41,7 @@ Data platform
 Data consumers (analytics, BI, algorithm teams)
 No team should bypass the platform and directly query raw infrastructure.
 7. Observability and Accountability
-Every pipeline, job, and service must be fully observable, with:
+   Every pipeline, job, and service must be fully observable, with:
     - Real-time monitoring
     - Alerting on failure or SLA breach
     - Explicit ownership for every critical component
@@ -69,7 +69,7 @@ To support heterogeneous data sources, three independent ingestion services were
 - Application log ingestion service for mobile apps and backend services
 
 All incoming records were transformed into a unified JSON schema defined by the data platform team before being published into Kafka, ensuring downstream consumers could process data in a consistent format regardless of source system.
- 
+
 #### Handling Schema Evolution
 Production databases were governed by a strict rule: **fields could be added but never removed or modified.**
 When schema changes occurred:
@@ -79,14 +79,14 @@ When schema changes occurred:
 
 To guarantee forward compatibility, each Hive fact table reserved a special column named unknown, used to store any unrecognized fields and their raw content.
 After validation, engineers updated table definitions and ETL logic, extracting historical fields from the unknown column without any need for Kafka replay.
- 
+
 #### Backfill Without Replay
 Because all unrecognized fields were already persisted in the data warehouse, historical data did not require re-consuming Kafka topics.
 For offline pipelines, backfill was performed by:
 - Updating Hive schemas
 - Extracting historical values from the unknown column
 For real-time pipelines, only new data was processed after service restart. Historical correction was handled by a one-time offline backfill task and then written back into real-time metric stores.
- 
+
 #### At-Least-Once Delivery Semantics
 For MySQL CDC:
 - Each binlog record contained a GTID
@@ -100,7 +100,7 @@ For MongoDB Change Streams:
 - Real-time streaming jobs implemented idempotent processors to filter duplicate records.
 
 A known edge case was a small duplication window during CDC restarts (approximately one minute). In rare situations — occurring once every one to two years — offline backfill was used to compensate for residual inconsistencies.
- 
+
 #### Ordering Guarantees
 - MySQL binlog events were forced into strict order by limiting producer parallelism to one batch at a time, ensuring source-order consistency.
 - MongoDB Change Stream events were allowed to be produced in parallel. Minor disorder was tolerated and handled by window-based processing in the real-time pipeline, preventing metric loss in most scenarios.
@@ -214,29 +214,30 @@ In the initial stage, I personally designed and developed the full CDC ingestion
 - Data dump service for offline warehouse ingestion
 
 These components formed the backbone of the Kafka-centric decoupling architecture and enabled both real-time and offline pipelines to be built on top of a unified ingestion layer.
- 
+
 ### Growth Phase – Platform-Level Ownership
 As the platform stabilized and my role expanded, I focused primarily on:
 - Reviewing and designing real-time and offline processing requirements, ensuring alignment with platform standards and long-term maintainability.
 - Defining requirements and conducting design reviews for the alerting and configuration platform, ensuring reliability and operational accountability.
 - Tracking and resolving issues in open-source components, including:
-- Fixing SLA alerting logic bugs and developing custom plugins for Azkaban
-- Investigating memory leak issues in Hive Metastore and coordinating remediation strategies
+  - Fixing SLA alerting logic bugs and developing custom plugins for Azkaban
+  - Investigating memory leak issues in Hive Metastore and coordinating remediation strategies
+
 
 ## Lessons Learned
 
 ### Responsibility Boundaries Are a Production Requirement
 In a multi-team environment, unclear ownership is not just a management problem — it becomes a direct technical risk.
 We once traced repeated Hive Metastore crashes to dozens of Docker-based algorithm services directly querying Hive with long-lived connection pools, eventually causing JVM GC failure. This incident made it clear that platform access boundaries must be enforced at the architectural level, not left to team conventions.
- 
+
 ### Documentation Is Part of the System, not a Byproduct
 Every stage — requirement analysis, design, testing, deployment, and operations — must be documented.
 Documentation is not for formality; it is the only reliable mechanism for knowledge transfer, incident traceability, and safe system evolution.
- 
+
 ### Most Engineering Work Happens in Failure Paths
 Over 70% of production engineering complexity lies in exception handling, not the happy path.
 During design reviews, failure scenarios, fallback logic, and edge cases must receive more attention than normal execution flows.
- 
+
 ### Distributed Systems Demand Defensive Interaction Patterns
 In cross-team integrations, success-path APIs are insufficient.
 Timeouts, circuit breakers, and rate limiting must be explicitly designed, reviewed, and tested, or system failures will inevitably cascade.
@@ -244,7 +245,7 @@ Timeouts, circuit breakers, and rate limiting must be explicitly designed, revie
 ### Observability Must Be Designed on Day One
 Alerting and monitoring are not add-ons.
 If failures are not detected automatically and routed to accountable owners, even the most elegant architecture will degrade into operational chaos.
- 
+
 ### Production Operations Require Full Rehearsal
 All manual production operations must be rehearsed in multiple test environments, including:
 - Forward execution steps
@@ -252,7 +253,7 @@ All manual production operations must be rehearsed in multiple test environments
 - Rollback procedures and rollback verification
 
 Both the operator (DevOps) and the requester (engineering / QA) must participate in these rehearsals.
- 
+
 ## No One Operates Production Alone
 All production changes must be executed strictly according to written runbooks, with at least two people present:
 - One performing the operation
