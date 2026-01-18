@@ -1,6 +1,6 @@
 # Nutri Pilot – AI-powered Nutrition Planning Platform
 
-Nutri Pilot is a full-stack SaaS platform that helps fitness studios and wellness coaches generate personalized meal plans and track client nutrition compliance.
+Nutri Pilot is a health-oriented application designed to assess the reasonableness of dietary plans by integrating user-provided recipe information with personal health profiles to deliver data-driven nutritional insights.
 
 ## Demos
 
