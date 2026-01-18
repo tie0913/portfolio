@@ -18,6 +18,7 @@ Nutri Pilot is a health-oriented application designed to assess the reasonablene
 | Database | MongoDB |
 | Frontend | Flutter |
 | Deployment | Docker Compose |
+| AI Model | ChatGPT 4o-mini|
 
 ## System Architecture
 
