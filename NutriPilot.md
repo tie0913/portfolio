@@ -47,7 +47,7 @@ Before implementation, I designed key system workflows to ensure security, scala
 
 ### 1. Reset Password – Secure Identity Recovery
 
-![Reset Password Flow](./images/nutri_pilot/sequences/usermanagement/Reset-Password.jpg)
+![Reset Password Flow](./images/nutri_pilot/sequences/usermanagement/Reset-Password.png)
 
 **Why this matters**
 
