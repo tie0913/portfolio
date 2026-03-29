@@ -4,7 +4,6 @@ Nutri Pilot is a health-oriented application designed to assess the reasonablene
 
 ## Demos
 
-- Live Demo: https://www.youtube.com/watch?v=PpI3tH1lzD8 (YouTube walkthrough, 3min)
 - Landing Page: https://nutripilot.tech/
 - GitHub Repo: 
   - https://github.com/tie0913/nuitri_pilot_frontend
