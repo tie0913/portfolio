@@ -1,5 +1,8 @@
 # Rebuilding a Failing Enterprise Data Platform
-Company: Shouqi Limousine & Chauffeur
+
+This document describes the system design and architecture of a production data platform, based on hands-on implementation and real-world system challenges.
+The system design and architecture described here were primarily designed and implemented by myself during the project.
+
 ## Background
 When I joined the team, my direct manager gave me a very explicit mandate:
 - The platform was approaching a breaking point.

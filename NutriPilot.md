@@ -2,24 +2,6 @@
 
 Nutri Pilot is a health-oriented application designed to assess the reasonableness of dietary plans by integrating user-provided recipe information with personal health profiles to deliver data-driven nutritional insights.
 
-## Demos
-
-- Landing Page: https://nutripilot.tech/
-- GitHub Repo: 
-  - https://github.com/tie0913/nuitri_pilot_frontend
-  - https://github.com/tie0913/nuitri_pilot_backend
-  - https://github.com/tie0913/mongo-replicaset-signalnode
-
-## Tech Stack
-
-| Layer | Technology |
-|------|------------|
-| Backend | FastAPI (async)|
-| Database | MongoDB |
-| Frontend | Flutter |
-| Deployment | Docker Compose |
-| AI Model | ChatGPT 4o-mini|
-
 ## System Architecture
 
 ![Architecture](./images/nutri_pilot/Architecture.jpg)
@@ -90,17 +72,11 @@ Instead, only the user’s chronic conditions and allergy information are stored
 
 ### Image Handling Strategy
 
-When a user uploads a food image, the system generates two derived versions:
+When a user uploads a food image, the system generates three derived versions:
 
-- A compressed image optimized for AI inference to reduce token usage  
-- A thumbnail image stored in MongoDB (planned to be migrated to a file server) for
-  displaying user history
+- A compressed image saved in object storage 
+- A thumbnail image stored in MongoDB 
+- A base64 string sent to AI 
 
 This approach reduces AI cost while keeping the UI responsive.
 
-
-
-## My Contributions
-- Designed system architecture from scratch
-- Implemented frontend application and backend services
-- Deployed the platform using Docker
