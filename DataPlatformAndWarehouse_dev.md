@@ -1,4 +1,4 @@
-# Data Platform – Real-time Data Processing System
+# Data Platform – Data Processing System
 
 ## Overview
 
