@@ -2,9 +2,9 @@
 
 Nutri Pilot is a health-oriented application designed to assess the reasonableness of dietary plans by integrating user-provided recipe information with personal health profiles to deliver data-driven nutritional insights.
 
-## System Architecture
+## Depolyment Architecture
 
-![Architecture](./images/nutri_pilot/Architecture.jpg)
+![Architecture](./images/nutri_pilot/Deployment.jpg)
 
 ## Unified Domain Model（E-R View）
 
