@@ -65,11 +65,3 @@ For deeper technical details and architecture decisions:
 * Performance Optimization
 * Monitoring & Alerting
 * Linux / Windows
-
----
-
-## Notes
-
-* Portfolio is organized to highlight hands-on engineering experience
-* Project documentation focuses on implementation and real-world system behavior
-* Architecture and design details are provided as optional deep-dive materials
